@@ -1,0 +1,8 @@
+---
+- name: My Task
+  # inventoryに定義されたホストまたはグループを指定
+  hosts: all
+  # become: true #rootユーザーで実行する
+  roles:
+    - role: common
+      tags: common  # tagをつけることによって、指定のroleのみ実行することができる

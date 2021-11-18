@@ -1,0 +1,2 @@
+role_name: "common"
+common_project_dir: "{{root_dir}}/{{group_name}}/{{host_name}}/{{role_name}}"

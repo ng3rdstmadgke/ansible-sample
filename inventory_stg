@@ -1,0 +1,5 @@
+[web]
+ansible-web-stg
+
+[app]
+ansible-app-stg

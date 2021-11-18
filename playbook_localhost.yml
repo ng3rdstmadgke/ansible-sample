@@ -1,0 +1,12 @@
+---
+- name: My Task
+  # localhostを指定するとsshせずにローカルにansibleを実行できる
+  hosts: localhost
+  # become: true #rootユーザーで実行する
+  roles:
+    - role: common
+      tags: common  # tagをつけることによって、指定のroleのみ実行することができる
+    - role: app
+      tags: app
+    - role: web
+      tags: web

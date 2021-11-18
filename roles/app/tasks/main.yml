@@ -1,0 +1,37 @@
+---
+
+# デプロイディレクトリの存在確認
+- name: deploy dir exists
+  # shell
+  # /bin/shを介してコマンドを実行。
+  # 環境変数や、パイプ・リダイレクトを使った処理を実行できる。shell
+  shell: "[ -d {{common_project_dir}} ]"
+  register: deploy_dir_exists
+  changed_when: false  # このタスクがchangedステータスにならなくなる
+  failed_when: false  # コマンドのreturn code が 0 でなくても処理を続ける
+
+# 存在していたらいったん削除
+- name: Remove deploy dir
+  command: "rm -rf {{common_project_dir}}"
+  become: true  # rootユーザーで実行する
+  when: deploy_dir_exists.rc == 0
+
+# デプロイディレクトリ作成
+- name: Make deploy dir
+  # command
+  # 環境変数などユーザー環境に依存しないコマンド実行。
+  # パイプやリダイレクトは利用できない
+  command: "mkdir -p {{common_project_dir}}"
+
+# files配下のファイルをコピー
+- name: copy files resource
+  copy:
+    src: ../files/foo.conf
+    dest: "{{common_project_dir}}/"
+    mode: "0644"
+
+# templates配下のファイルを評価 & 適用
+- name: apply templates resource
+  template:
+    src: templates/bar.conf.j2
+    dest: "{{common_project_dir}}/bar.conf"
