@@ -151,7 +151,8 @@ ansible-playbook  -i inventory_prd -l  ansible-app-prd playbook_common.yml
 ```
 
 # 参考
-[Ansible Best Practices](https://docs.ansible.com/ansible/2.8/user_guide/playbooks_best_practices.html)
-[Ansible Roles](https://docs.ansible.com/ansible/2.8/user_guide/playbooks_reuse_roles.html)
-[【Ansible】メンテナンスしやすいPlaybookの書き方](https://densan-hoshigumi.com/server/playbook-maintainability)
+
+- [Ansible Best Practices](https://docs.ansible.com/ansible/2.8/user_guide/playbooks_best_practices.html)
+- [Ansible Roles](https://docs.ansible.com/ansible/2.8/user_guide/playbooks_reuse_roles.html)
+- [【Ansible】メンテナンスしやすいPlaybookの書き方](https://densan-hoshigumi.com/server/playbook-maintainability)
 
