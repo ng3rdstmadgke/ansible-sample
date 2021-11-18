@@ -86,6 +86,7 @@ roles/
 
 # playbook 実行コマンド
 
+## ローカルで実行
 
 ```bash
 # ローカルホストに対して実行 (hosts: localhost となっているplaybookを指定)
@@ -105,6 +106,33 @@ ansible-playbook  -i inventory_prd -l web playbook_common.yml
 
 # 特定のホストに対してのみ実行 (-l オプションでホスト名を指定)
 ansible-playbook  -i inventory_prd -l  ansible-app-prd playbook_common.yml
+```
+
+## コンテナで実行
+
+※ localhostに対してのデプロイはできないので注意
+
+```
+# imageのビルド
+./bin/build.sh
+
+```
+
+```bash
+# インベントリファイルを指定して実行 (-i オプションでinventoryを指定)
+./bin/ansible-playbook.sh -i inventory_prd playbook_common.yml
+./bin/ansible-playbook.sh -i inventory_prd playbook_app.yml
+./bin/ansible-playbook.sh -i inventory_prd playbook_web.yml
+
+# 特定のロールのみ実行 (--tags オプションでロールに紐づくタグを指定)
+./bin/ansible-playbook.sh --tags app -i inventory_prd playbook_app.yml
+./bin/ansible-playbook.sh --tags common,web -i inventory_prd playbook_web.yml
+
+# 特定のグループに対してのみ実行 (-l オプションでグループ名を指定)
+./bin/ansible-playbook.sh  -i inventory_prd -l web playbook_common.yml
+
+# 特定のホストに対してのみ実行 (-l オプションでホスト名を指定)
+./bin/ansible-playbook.sh  -i inventory_prd -l  ansible-app-prd playbook_common.yml
 ```
 
 ## オプション
