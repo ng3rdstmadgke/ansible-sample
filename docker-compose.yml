@@ -1,0 +1,82 @@
+version: "3.8"
+
+services:
+  ##############################
+  # stg
+  ##############################
+  ansible-web-dev:
+    container_name: ansible-web-dev
+    image: lscr.io/linuxserver/openssh-server:9.9_p2-r0-ls193
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Tokyo
+      - SUDO_ACCESS=true
+      - PASSWORD_ACCESS=true
+      - USER_PASSWORD=
+      - USER_NAME=ansible
+      - PUBLIC_KEY_FILE=/ssk_key/id_ed25519.pub
+    volumes:
+      - $HOST_DIR/docker/openssh-server/custom-files:/custom-cont-init.d:ro
+      - $HOST_DIR/docker/openssh-server/ssh_key:/ssk_key:ro
+    networks:
+      br-ansible-sample: {}
+  ansible-app-dev:
+    container_name: ansible-app-dev
+    image: lscr.io/linuxserver/openssh-server:9.9_p2-r0-ls193
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Tokyo
+      - SUDO_ACCESS=true
+      - PASSWORD_ACCESS=true
+      - USER_PASSWORD=
+      - USER_NAME=ansible
+      - PUBLIC_KEY_FILE=/ssk_key/id_ed25519.pub
+    volumes:
+      - $HOST_DIR/docker/openssh-server/custom-files:/custom-cont-init.d:ro
+      - $HOST_DIR/docker/openssh-server/ssh_key:/ssk_key:ro
+    networks:
+      br-ansible-sample: {}
+  ##############################
+  # prd
+  ##############################
+  ansible-web-prd:
+    container_name: ansible-web-prd
+    image: lscr.io/linuxserver/openssh-server:9.9_p2-r0-ls193
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Tokyo
+      - SUDO_ACCESS=true
+      - PASSWORD_ACCESS=true
+      - USER_PASSWORD=
+      - USER_NAME=ansible
+      - PUBLIC_KEY_FILE=/ssk_key/id_ed25519.pub
+    volumes:
+      - $HOST_DIR/docker/openssh-server/custom-files:/custom-cont-init.d:ro
+      - $HOST_DIR/docker/openssh-server/ssh_key:/ssk_key:ro
+    networks:
+      br-ansible-sample: {}
+  ansible-app-prd:
+    container_name: ansible-app-prd
+    image: lscr.io/linuxserver/openssh-server:9.9_p2-r0-ls193
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Tokyo
+      - SUDO_ACCESS=true
+      - PASSWORD_ACCESS=true
+      - USER_PASSWORD=
+      - USER_NAME=ansible
+      - PUBLIC_KEY_FILE=/ssk_key/id_ed25519.pub
+    volumes:
+      - $HOST_DIR/docker/openssh-server/custom-files:/custom-cont-init.d:ro
+      - $HOST_DIR/docker/openssh-server/ssh_key:/ssk_key:ro
+    networks:
+      br-ansible-sample: {}
+networks:
+  br-ansible-sample:
+    external: true
+    driver: bridge
+    name: ${DOCKER_NETWORK}

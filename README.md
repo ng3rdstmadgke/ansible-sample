@@ -21,12 +21,10 @@ ansible-sample/
 
 ```
 ansible-sample/
-  - inventory_dev
+  - inventory_dev.yml
     dev 環境のインベントリファイル
-  - inventory_prd
+  - inventory_prd.yml
     prd 環境のインベントリファイル
-  - inventory_stg
-    stg 環境のインベントリファイル
 ```
 
 ## group\_vars
@@ -56,10 +54,8 @@ ansible-sample/
     - ansible-app-dev.yml
       inventoryの ansible-app-dev ホストで参照される
     - ansible-app-prd.yml
-    - ansible-app-stg.yml
     - ansible-web-dev.yml
     - ansible-web-prd.yml
-    - ansible-web-stg.yml
     - localhost.yml
       playbookのhostsでlocalhostを指定しているときに参照される
 ```
@@ -88,6 +84,18 @@ ansible-sample/
     - web/
 ```
 
+# 検証用コンテナ起動
+
+```bash
+docker-compose up
+```
+
+接続確認
+
+```bash
+HOST_NAME=ansible-web-dev
+./bin/login.sh $HOST_NAME
+```
 
 # playbook 実行コマンド
 
@@ -98,46 +106,19 @@ ansible-sample/
 ansible-playbook playbook_localhost.yml
 
 # インベントリファイルを指定して実行 (-i オプションでinventoryを指定)
-ansible-playbook -i inventory_prd playbook_common.yml
-ansible-playbook -i inventory_prd playbook_app.yml
-ansible-playbook -i inventory_prd playbook_web.yml
+ansible-playbook -i inventory_prd.yml playbook_common.yml
+ansible-playbook -i inventory_prd.yml playbook_app.yml
+ansible-playbook -i inventory_prd.yml playbook_web.yml
 
 # 特定のロールのみ実行 (--tags オプションでロールに紐づくタグを指定)
-ansible-playbook --tags app -i inventory_prd playbook_app.yml
-ansible-playbook --tags common,web -i inventory_prd playbook_web.yml
+ansible-playbook --tags app -i inventory_prd.yml playbook_app.yml
+ansible-playbook --tags common,web -i inventory_prd.yml playbook_web.yml
 
 # 特定のグループに対してのみ実行 (-l オプションでグループ名を指定)
-ansible-playbook  -i inventory_prd -l web playbook_common.yml
+ansible-playbook  -i inventory_prd.yml -l web playbook_common.yml
 
 # 特定のホストに対してのみ実行 (-l オプションでホスト名を指定)
-ansible-playbook  -i inventory_prd -l  ansible-app-prd playbook_common.yml
-```
-
-## コンテナで実行
-
-※ localhostに対してのデプロイはできないので注意
-
-```
-# imageのビルド
-./bin/build.sh
-
-```
-
-```bash
-# インベントリファイルを指定して実行 (-i オプションでinventoryを指定)
-./bin/ansible-playbook.sh -i inventory_prd playbook_common.yml
-./bin/ansible-playbook.sh -i inventory_prd playbook_app.yml
-./bin/ansible-playbook.sh -i inventory_prd playbook_web.yml
-
-# 特定のロールのみ実行 (--tags オプションでロールに紐づくタグを指定)
-./bin/ansible-playbook.sh --tags app -i inventory_prd playbook_app.yml
-./bin/ansible-playbook.sh --tags common,web -i inventory_prd playbook_web.yml
-
-# 特定のグループに対してのみ実行 (-l オプションでグループ名を指定)
-./bin/ansible-playbook.sh  -i inventory_prd -l web playbook_common.yml
-
-# 特定のホストに対してのみ実行 (-l オプションでホスト名を指定)
-./bin/ansible-playbook.sh  -i inventory_prd -l  ansible-app-prd playbook_common.yml
+ansible-playbook  -i inventory_prd.yml -l  ansible-app-prd playbook_common.yml
 ```
 
 ## オプション
@@ -152,7 +133,7 @@ ansible-playbook  -i inventory_prd -l  ansible-app-prd playbook_common.yml
 
 # 参考
 
+- [Ansible の使い方](https://zenn.dev/y_mrok/books/ansible-no-tsukaikata)
 - [Ansible Best Practices](https://docs.ansible.com/ansible/2.8/user_guide/playbooks_best_practices.html)
 - [Ansible Roles](https://docs.ansible.com/ansible/2.8/user_guide/playbooks_reuse_roles.html)
 - [【Ansible】メンテナンスしやすいPlaybookの書き方](https://densan-hoshigumi.com/server/playbook-maintainability)
-

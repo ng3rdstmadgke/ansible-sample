@@ -1,0 +1,14 @@
+all:
+  vars:
+    ansible_user: ansible
+    ansible_ssh_private_key_file: /workspaces/ansible-sample/docker/openssh-server/ssh_key/id_ed25519
+    ansible_port: 2222
+  children:
+    web:
+      hosts:
+        ansible-web-dev:
+          ansible_host: ansible-web-dev
+    app:
+      hosts:
+        ansible-app-dev:
+          ansible_host: ansible-app-dev
