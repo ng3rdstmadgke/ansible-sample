@@ -84,10 +84,12 @@ ansible-sample/
     - web/
 ```
 
-# 検証用コンテナ起動
+# playbookの実行
+
+## 検証用コンテナ起動
 
 ```bash
-docker-compose up
+docker-compose down && docker-compose up
 ```
 
 接続確認
@@ -97,11 +99,18 @@ HOST_NAME=ansible-web-dev
 ./bin/login.sh $HOST_NAME
 ```
 
-# playbook 実行コマンド
-
 ## ローカルで実行
 
 ```bash
+# ansible-playbookのオプション
+#
+# -i <InventoryFile>: インベントリファイルを指定
+# --list-hosts: 実行対象のホストを表示
+# --list-tasks: 実行タスクを表示
+# --tags: 実行対象のタグを指定
+# -l <Subset>: グループ名やホスト名を指定
+
+
 # ローカルホストに対して実行 (hosts: localhost となっているplaybookを指定)
 ansible-playbook playbook_localhost.yml
 
@@ -121,14 +130,10 @@ ansible-playbook  -i inventory_prd.yml -l web playbook_common.yml
 ansible-playbook  -i inventory_prd.yml -l  ansible-app-prd playbook_common.yml
 ```
 
-## オプション
+## 検証用コンテナの停止
 
-```
--i <InventoryFile>: インベントリファイルを指定
---list-hosts: 実行対象のホストを表示
---list-tasks: 実行タスクを表示
---tags: 実行対象のタグを指定
--l <Subset>: グループ名やホスト名を指定
+```bash
+docker-compose down
 ```
 
 # 参考
